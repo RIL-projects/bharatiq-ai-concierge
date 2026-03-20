@@ -132,17 +132,69 @@ const DiscoveryScreen = ({ onSelectRestaurant, onProcessingChange }: DiscoverySc
       <div className="flex-1 px-4 pb-4 space-y-3">
         {/* Idle state */}
         {phase === "idle" && (
-          <div className="flex flex-col items-center justify-center h-full gap-4">
-            <BharatIQAvatar size="lg" />
-            <p className="text-sm text-muted-foreground text-center max-w-[280px]">
-              Tell me what you're looking for — I understand complex requests like budget, party size, vibe, and more.
-            </p>
-            <button
-              onClick={startFlow}
-              className="px-4 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
-            >
-              Try: "Family dinner Saturday under ₹2,500"
-            </button>
+          <div className="flex flex-col h-full">
+            {/* Hero section */}
+            <div className="flex flex-col items-center pt-6 pb-4 gap-3">
+              <BharatIQAvatar size="lg" />
+              <div className="text-center">
+                <h3 className="text-base font-bold text-foreground mb-1">What are you in the mood for?</h3>
+                <p className="text-xs text-muted-foreground max-w-[260px]">
+                  Ask me anything — budget, group size, vibe, cuisine. I'll find the perfect match.
+                </p>
+              </div>
+            </div>
+
+            {/* Fake input bar */}
+            <div className="mx-1 mb-4">
+              <div
+                onClick={startFlow}
+                className="flex items-center gap-2 px-4 py-3 rounded-xl border border-border bg-card cursor-pointer hover:border-primary/40 transition-colors"
+              >
+                <span className="text-sm text-muted-foreground flex-1">Tell me what you're looking for...</span>
+                <span className="text-xs px-2 py-1 rounded-lg bg-primary text-primary-foreground font-medium">Ask</span>
+              </div>
+            </div>
+
+            {/* Example queries */}
+            <div className="space-y-2 mb-4">
+              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">Try asking</p>
+              <div className="space-y-1.5">
+                {[
+                  { emoji: "👨‍👩‍👧", text: "Family dinner Saturday under ₹2,500", highlight: true },
+                  { emoji: "🍻", text: "Friday night with friends, brewery vibes" },
+                  { emoji: "🌶️", text: "Best Thai food near me for lunch" },
+                  { emoji: "💑", text: "Romantic date night, ₹5K budget" },
+                ].map((q) => (
+                  <button
+                    key={q.text}
+                    onClick={startFlow}
+                    className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-left transition-colors ${
+                      q.highlight
+                        ? "bg-primary/5 border border-primary/20 hover:bg-primary/10"
+                        : "bg-secondary/50 border border-transparent hover:bg-secondary"
+                    }`}
+                  >
+                    <span className="text-base">{q.emoji}</span>
+                    <span className="text-xs text-foreground">{q.text}</span>
+                    {q.highlight && (
+                      <span className="ml-auto text-[9px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-semibold">Demo</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* What I understand */}
+            <div className="mt-auto pb-2">
+              <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-2">I understand</p>
+              <div className="flex flex-wrap gap-1.5">
+                {["🎯 Intent", "💰 Budget", "👥 Group size", "📅 Timing", "🍽️ Cuisine", "📍 Location", "👶 Kid-friendly", "✨ Vibe"].map((tag) => (
+                  <span key={tag} className="px-2 py-1 rounded-full bg-secondary text-[10px] text-muted-foreground">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
